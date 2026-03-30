@@ -10,6 +10,7 @@ const PLATFORMS = [
   { key: 'stripe', label: 'Stripe', docs: 'https://dashboard.stripe.com/apikeys' },
   { key: 'supabase_url', label: 'Supabase URL', docs: 'https://app.supabase.com/projects' },
   { key: 'supabase_key', label: 'Supabase API Key', docs: 'https://app.supabase.com/projects' },
+  { key: 'bolt', label: 'Bolt', docs: 'https://bolt.cm/account/tokens' },
 ];
 
 export default function TokenSettings() {

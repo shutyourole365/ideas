@@ -7,6 +7,7 @@ export interface Tokens {
   stripe: string;
   supabase_url: string;
   supabase_key: string;
+  bolt: string;
   [key: string]: string;
 }
 
@@ -38,6 +39,7 @@ export const useTokenStore = create<TokenStore>((set, get) => ({
     stripe: '',
     supabase_url: '',
     supabase_key: '',
+    bolt: '',
   },
   persistEnabled: false,
   setPersistEnabled: (enabled: boolean) => {

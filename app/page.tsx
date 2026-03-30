@@ -7,6 +7,7 @@ import VercelDashboard from '@/components/VercelDashboard';
 import NetlifyDashboard from '@/components/NetlifyDashboard';
 import StripeDashboard from '@/components/StripeDashboard';
 import SupabaseDashboard from '@/components/SupabaseDashboard';
+import BoltDashboard from '@/components/BoltDashboard';
 import { useTokenStore } from '@/lib/store';
 
 export default function Home() {
@@ -71,6 +72,12 @@ export default function Home() {
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Supabase</h2>
               <SupabaseDashboard />
+            </div>
+
+            {/* Bolt */}
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Bolt</h2>
+              <BoltDashboard />
             </div>
           </div>
         )}
