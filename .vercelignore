@@ -1,0 +1,34 @@
+# Mobile app - deploy separately
+mobile/
+
+# Development files
+.env.local
+.env.*.local
+
+# Git
+.git
+.gitignore
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build
+.next/
+out/
+dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docs
+README.md
+DEPLOYMENT.md
