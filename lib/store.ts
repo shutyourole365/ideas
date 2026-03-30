@@ -8,6 +8,8 @@ export interface Tokens {
   supabase_url: string;
   supabase_key: string;
   bolt: string;
+  google_cloud: string;
+  claude: string;
   [key: string]: string;
 }
 
@@ -40,6 +42,8 @@ export const useTokenStore = create<TokenStore>((set, get) => ({
     supabase_url: '',
     supabase_key: '',
     bolt: '',
+    google_cloud: '',
+    claude: '',
   },
   persistEnabled: false,
   setPersistEnabled: (enabled: boolean) => {

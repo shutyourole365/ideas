@@ -11,6 +11,8 @@ const PLATFORMS = [
   { key: 'supabase_url', label: 'Supabase URL', docs: 'https://app.supabase.com/projects' },
   { key: 'supabase_key', label: 'Supabase API Key', docs: 'https://app.supabase.com/projects' },
   { key: 'bolt', label: 'Bolt', docs: 'https://bolt.cm/account/tokens' },
+  { key: 'google_cloud', label: 'Google Cloud', docs: 'https://console.cloud.google.com/apis/credentials' },
+  { key: 'claude', label: 'Claude/Anthropic', docs: 'https://console.anthropic.com/account/keys' },
 ];
 
 export default function TokenSettings() {

@@ -8,6 +8,8 @@ import NetlifyDashboard from '@/components/NetlifyDashboard';
 import StripeDashboard from '@/components/StripeDashboard';
 import SupabaseDashboard from '@/components/SupabaseDashboard';
 import BoltDashboard from '@/components/BoltDashboard';
+import GoogleCloudDashboard from '@/components/GoogleCloudDashboard';
+import ClaudeDashboard from '@/components/ClaudeDashboard';
 import { useTokenStore } from '@/lib/store';
 
 export default function Home() {
@@ -78,6 +80,18 @@ export default function Home() {
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Bolt</h2>
               <BoltDashboard />
+            </div>
+
+            {/* Google Cloud */}
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Google Cloud</h2>
+              <GoogleCloudDashboard />
+            </div>
+
+            {/* Claude */}
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Claude</h2>
+              <ClaudeDashboard />
             </div>
           </div>
         )}
