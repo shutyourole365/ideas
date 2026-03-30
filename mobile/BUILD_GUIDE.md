@@ -5,7 +5,7 @@ This guide walks you through building and releasing the Unified Dashboard mobile
 ## Prerequisites
 
 1. **Node.js** 18+ and npm
-2. **Expo CLI** installed globally:
+2. **EAS CLI** installed globally:
    ```bash
    npm install -g eas-cli
    ```
