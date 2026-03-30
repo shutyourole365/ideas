@@ -63,22 +63,18 @@ class VercelClient {
   }
 
   async getDeployments(projectId: string, limit: number = 5): Promise<VercelDeployment[]> {
-    try {
-      const res = await this.client.get('/v6/deployments', {
-        params: { projectId, limit },
-      });
-      return res.data.deployments.map((dep: any) => ({
-        uid: dep.uid,
-        name: dep.name,
-        url: dep.url,
-        status: dep.status,
-        state: dep.state,
-        created: dep.created,
-        ready: dep.ready,
-      }));
-    } catch {
-      return [];
-    }
+    const res = await this.client.get('/v6/deployments', {
+      params: { projectId, limit },
+    });
+    return res.data.deployments.map((dep: any) => ({
+      uid: dep.uid,
+      name: dep.name,
+      url: dep.url,
+      status: dep.status,
+      state: dep.state,
+      created: dep.created,
+      ready: dep.ready,
+    }));
   }
 }
 

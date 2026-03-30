@@ -67,19 +67,15 @@ class GitHubClient {
   }
 
   async getDeployments(owner: string, repo: string): Promise<GitHubDeployment[]> {
-    try {
-      const res = await this.client.get(`/repos/${owner}/${repo}/deployments`);
-      return res.data.slice(0, 5).map((dep: any) => ({
-        id: dep.id,
-        ref: dep.ref,
-        status: dep.statuses_url ? 'active' : 'pending',
-        environment: dep.environment,
-        created_at: dep.created_at,
-        updated_at: dep.updated_at,
-      }));
-    } catch {
-      return [];
-    }
+    const res = await this.client.get(`/repos/${owner}/${repo}/deployments`);
+    return res.data.slice(0, 5).map((dep: any) => ({
+      id: dep.id,
+      ref: dep.ref,
+      status: dep.statuses_url ? 'active' : 'pending',
+      environment: dep.environment,
+      created_at: dep.created_at,
+      updated_at: dep.updated_at,
+    }));
   }
 }
 
