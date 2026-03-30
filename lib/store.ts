@@ -122,7 +122,7 @@ export const useTokenStore = create<TokenStore>((set, get) => ({
       const persistFlagExists = localStorage.getItem(PERSIST_ENABLED_KEY) !== null;
 
       // Check if tokens exist in storage for backward compatibility
-      const hasExistingTokens = stored && Object.keys(safeJsonParse(stored)).length > 0;
+      const hasExistingTokens = stored && Object.values(safeJsonParse(stored)).some((value) => value);
 
       // Restore persistEnabled: if flag exists use it, otherwise infer from existing tokens
       const persistEnabled = persistFlagExists
