@@ -10,6 +10,24 @@ export interface Tokens {
   bolt: string;
   google_cloud: string;
   claude: string;
+  datadog: string;
+  datadog_app_key: string;
+  sentry: string;
+  linear: string;
+  auth0: string;
+  auth0_domain: string;
+  slack: string;
+  sendgrid: string;
+  aws_key: string;
+  aws_secret: string;
+  digitalocean: string;
+  mongodb_public: string;
+  mongodb_private: string;
+  redis: string;
+  plausible: string;
+  segment: string;
+  vault: string;
+  vault_addr: string;
   [key: string]: string;
 }
 
@@ -44,6 +62,24 @@ export const useTokenStore = create<TokenStore>((set, get) => ({
     bolt: '',
     google_cloud: '',
     claude: '',
+    datadog: '',
+    datadog_app_key: '',
+    sentry: '',
+    linear: '',
+    auth0: '',
+    auth0_domain: '',
+    slack: '',
+    sendgrid: '',
+    aws_key: '',
+    aws_secret: '',
+    digitalocean: '',
+    mongodb_public: '',
+    mongodb_private: '',
+    redis: '',
+    plausible: '',
+    segment: '',
+    vault: '',
+    vault_addr: '',
   },
   persistEnabled: false,
   setPersistEnabled: (enabled: boolean) => {
