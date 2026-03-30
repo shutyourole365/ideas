@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 import TokenSettings from '@/components/TokenSettings';
 import GitHubDashboard from '@/components/GitHubDashboard';
 import VercelDashboard from '@/components/VercelDashboard';
+import NetlifyDashboard from '@/components/NetlifyDashboard';
+import StripeDashboard from '@/components/StripeDashboard';
+import SupabaseDashboard from '@/components/SupabaseDashboard';
 import { useTokenStore } from '@/lib/store';
 
 export default function Home() {
@@ -39,7 +42,7 @@ export default function Home() {
             <TokenSettings />
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             {/* GitHub */}
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">GitHub</h2>
@@ -50,6 +53,24 @@ export default function Home() {
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Vercel</h2>
               <VercelDashboard />
+            </div>
+
+            {/* Netlify */}
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Netlify</h2>
+              <NetlifyDashboard />
+            </div>
+
+            {/* Stripe */}
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Stripe</h2>
+              <StripeDashboard />
+            </div>
+
+            {/* Supabase */}
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Supabase</h2>
+              <SupabaseDashboard />
             </div>
           </div>
         )}
