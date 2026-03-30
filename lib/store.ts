@@ -118,18 +118,24 @@ export const useTokenStore = create<TokenStore>((set, get) => ({
   },
   loadTokens: () => {
     if (typeof window !== 'undefined') {
-      // Restore persistEnabled state
-      const persistEnabled = localStorage.getItem(PERSIST_ENABLED_KEY) === 'true';
+      const stored = localStorage.getItem(STORAGE_KEY);
+      const persistFlagExists = localStorage.getItem(PERSIST_ENABLED_KEY) !== null;
+
+      // Check if tokens exist in storage for backward compatibility
+      const hasExistingTokens = stored && Object.keys(safeJsonParse(stored)).length > 0;
+
+      // Restore persistEnabled: if flag exists use it, otherwise infer from existing tokens
+      const persistEnabled = persistFlagExists
+        ? localStorage.getItem(PERSIST_ENABLED_KEY) === 'true'
+        : hasExistingTokens;
+
       set({ persistEnabled });
 
-      // Load tokens if persistence was enabled
-      if (persistEnabled) {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored) {
-          const parsed = safeJsonParse(stored);
-          if (Object.keys(parsed).length > 0) {
-            set({ tokens: { ...get().tokens, ...parsed } });
-          }
+      // Load tokens if persistence was enabled OR if tokens exist (backward compat)
+      if (persistEnabled && stored) {
+        const parsed = safeJsonParse(stored);
+        if (Object.keys(parsed).length > 0) {
+          set({ tokens: { ...get().tokens, ...parsed } });
         }
       }
     }

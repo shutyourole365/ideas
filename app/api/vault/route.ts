@@ -1,16 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server';
 import VaultClient from '@/lib/integrations/vault';
 
+// Build allowed hosts list, parsing VAULT_ADDR if it's a URL
 const ALLOWED_VAULT_HOSTS = [
   'localhost:8200',
   '127.0.0.1:8200',
-  process.env.VAULT_ADDR,
-].filter(Boolean);
+  ...(process.env.VAULT_ADDR ? (() => {
+    try {
+      // If VAULT_ADDR is a full URL, extract its host (includes port)
+      return [new URL(process.env.VAULT_ADDR!).host];
+    } catch {
+      // If it's not a valid URL, use as-is (assume host:port format)
+      return [process.env.VAULT_ADDR!];
+    }
+  })() : []),
+];
 
 function isValidVaultAddr(addr: string): boolean {
   try {
     const url = new URL(addr.startsWith('http') ? addr : `http://${addr}`);
-    return ALLOWED_VAULT_HOSTS.some(host => url.host === host || url.hostname === new URL(`http://${host}`).hostname);
+    // Only compare full host (including port) - no hostname-only fallback
+    return ALLOWED_VAULT_HOSTS.some(allowed => {
+      try {
+        const allowedUrl = new URL(allowed.startsWith('http') ? allowed : `http://${allowed}`);
+        return url.host === allowedUrl.host;
+      } catch {
+        return false;
+      }
+    });
   } catch {
     return false;
   }

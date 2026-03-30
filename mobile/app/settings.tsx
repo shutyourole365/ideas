@@ -22,6 +22,13 @@ export default function SettingsScreen() {
 
   useEffect(() => {
     loadTokens();
+
+    // Cleanup: clear all pending debounce timers on unmount
+    return () => {
+      Object.values(debounceTimersRef.current).forEach(timer => {
+        if (timer) clearTimeout(timer);
+      });
+    };
   }, []);
 
   const loadTokens = async () => {
