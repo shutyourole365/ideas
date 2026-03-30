@@ -3,10 +3,7 @@
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
-  "env": {
-    "NEXT_PUBLIC_GITHUB_TOKEN": "@github_token",
-    "NEXT_PUBLIC_VERCEL_TOKEN": "@vercel_token"
-  },
+  "env": {}
   "functions": {
     "app/api/**/*.ts": {
       "runtime": "nodejs18.x"

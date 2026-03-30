@@ -24,6 +24,10 @@ class Auth0Client {
   private client: AxiosInstance;
 
   constructor(token: string, domain: string) {
+    // Validate domain format to prevent SSRF
+    if (!/^[a-z0-9-]+\.auth0\.com$/.test(domain.toLowerCase())) {
+      throw new Error('Invalid Auth0 domain format');
+    }
     this.client = axios.create({
       baseURL: `https://${domain}/api/v2`,
       headers: {

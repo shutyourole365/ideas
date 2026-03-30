@@ -37,6 +37,7 @@ class LinearClient {
   async getTeams(): Promise<LinearTeam[]> {
     const query = `query { teams { nodes { id name key } } }`;
     const res = await this.client.post('', { query });
+    if (!res.data || !res.data.data) return [];
     return res.data.data?.teams?.nodes?.map((team: any) => ({
       id: team.id,
       name: team.name,
@@ -53,6 +54,7 @@ class LinearClient {
       }
     }`;
     const res = await this.client.post('', { query });
+    if (!res.data || !res.data.data) return [];
     return res.data.data?.issues?.nodes?.map((issue: any) => ({
       id: issue.id,
       title: issue.title,
@@ -66,6 +68,7 @@ class LinearClient {
   async getProjects(): Promise<LinearProject[]> {
     const query = `query { projects(first: 10) { nodes { id name key status } } }`;
     const res = await this.client.post('', { query });
+    if (!res.data || !res.data.data) return [];
     return res.data.data?.projects?.nodes?.map((project: any) => ({
       id: project.id,
       name: project.name,

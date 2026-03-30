@@ -33,6 +33,7 @@ class SlackClient {
 
   async getTeam(): Promise<SlackTeam> {
     const res = await this.client.get('/team.info');
+    if (!res.data.ok || !res.data.team) throw new Error('Failed to fetch team info');
     return {
       id: res.data.team.id,
       name: res.data.team.name,
@@ -44,6 +45,7 @@ class SlackClient {
     const res = await this.client.get('/conversations.list', {
       params: { limit: 10 },
     });
+    if (!res.data.ok || !res.data.channels) return [];
     return res.data.channels.slice(0, 10).map((channel: any) => ({
       id: channel.id,
       name: channel.name,
@@ -54,6 +56,7 @@ class SlackClient {
 
   async getUsers(): Promise<SlackUser[]> {
     const res = await this.client.get('/users.list');
+    if (!res.data.ok || !res.data.members) return [];
     return res.data.members.slice(0, 10).map((user: any) => ({
       id: user.id,
       name: user.name,

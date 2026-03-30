@@ -41,6 +41,7 @@ interface TokenStore {
 }
 
 const STORAGE_KEY = 'platform_tokens';
+const PERSIST_ENABLED_KEY = 'platform_tokens_persist_enabled';
 
 const safeJsonParse = (json: string) => {
   try {
@@ -84,8 +85,18 @@ export const useTokenStore = create<TokenStore>((set, get) => ({
   persistEnabled: false,
   setPersistEnabled: (enabled: boolean) => {
     set({ persistEnabled: enabled });
-    if (!enabled && typeof window !== 'undefined') {
-      localStorage.removeItem(STORAGE_KEY);
+    if (typeof window !== 'undefined') {
+      if (enabled) {
+        // Save the persistEnabled state
+        localStorage.setItem(PERSIST_ENABLED_KEY, 'true');
+        // When enabling, sync all current tokens to localStorage
+        const tokens = get().tokens;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(tokens));
+      } else {
+        // When disabling, remove persistence flag and stored tokens
+        localStorage.removeItem(PERSIST_ENABLED_KEY);
+        localStorage.removeItem(STORAGE_KEY);
+      }
     }
   },
   setToken: (platform: string, token: string) => {
@@ -107,11 +118,18 @@ export const useTokenStore = create<TokenStore>((set, get) => ({
   },
   loadTokens: () => {
     if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const parsed = safeJsonParse(stored);
-        if (Object.keys(parsed).length > 0) {
-          set({ tokens: { ...get().tokens, ...parsed } });
+      // Restore persistEnabled state
+      const persistEnabled = localStorage.getItem(PERSIST_ENABLED_KEY) === 'true';
+      set({ persistEnabled });
+
+      // Load tokens if persistence was enabled
+      if (persistEnabled) {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          const parsed = safeJsonParse(stored);
+          if (Object.keys(parsed).length > 0) {
+            set({ tokens: { ...get().tokens, ...parsed } });
+          }
         }
       }
     }

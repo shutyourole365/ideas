@@ -56,9 +56,12 @@ class VaultClient {
         method: 'LIST',
         url: '/sys/leases/lookup',
       });
+      // Vault doesn't provide expiration in LIST response, so we calculate based on server time
+      // In production, you'd fetch individual lease details or use TTL from auth
+      const expireTime = new Date(Date.now() + 3600 * 1000); // Default 1 hour
       return res.data.data?.keys?.slice(0, 5).map((lease: string) => ({
         id: lease,
-        expire_time: new Date().toISOString(),
+        expire_time: expireTime.toISOString(),
       })) || [];
     } catch {
       return [];

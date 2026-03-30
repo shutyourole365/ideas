@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { View, Text, ScrollView, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
@@ -18,6 +18,7 @@ const PLATFORMS = [
 export default function SettingsScreen() {
   const [tokens, setTokens] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
+  const debounceTimersRef = useRef<Record<string, NodeJS.Timeout>>({});
 
   useEffect(() => {
     loadTokens();
@@ -39,12 +40,21 @@ export default function SettingsScreen() {
   };
 
   const saveToken = async (key: string, value: string) => {
-    try {
-      await SecureStore.setItemAsync(key, value);
-      setTokens(prev => ({ ...prev, [key]: value }));
-    } catch (error) {
-      console.error('Failed to save token:', error);
+    // Update local state immediately for UI responsiveness
+    setTokens(prev => ({ ...prev, [key]: value }));
+
+    // Debounce SecureStore write (500ms)
+    if (debounceTimersRef.current[key]) {
+      clearTimeout(debounceTimersRef.current[key]);
     }
+
+    debounceTimersRef.current[key] = setTimeout(async () => {
+      try {
+        await SecureStore.setItemAsync(key, value);
+      } catch (error) {
+        console.error('Failed to save token:', error);
+      }
+    }, 500);
   };
 
   if (loading) {

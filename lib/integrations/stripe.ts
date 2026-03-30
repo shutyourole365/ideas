@@ -35,7 +35,7 @@ export interface StripeSubscription {
   items: {
     data: Array<{
       price: {
-        amount: number;
+        unit_amount: number | null;
         currency: string;
       };
     }>;

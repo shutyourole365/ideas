@@ -50,7 +50,7 @@ class SendGridClient {
     });
     return res.data.map((stat: any) => ({
       date: stat.date,
-      stats: stat.stats[0],
+      stats: stat.stats?.[0] || { delivered: 0, bounces: 0, opens: 0, clicks: 0 },
     }));
   }
 

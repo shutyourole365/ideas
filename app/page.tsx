@@ -70,7 +70,7 @@ export default function Home() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Unified Dashboard</h1>
-              <p className="text-gray-600 text-sm mt-1">21 Integrated Platforms</p>
+              <p className="text-gray-600 text-sm mt-1">{PLATFORMS.length} Integrated Platforms</p>
             </div>
             <button
               onClick={() => setShowSettings(!showSettings)}
@@ -118,7 +118,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-white border-t border-gray-200 mt-12">
         <div className="max-w-7xl mx-auto px-6 py-6 text-center text-gray-600 text-sm">
-          <p>✨ 21 platforms integrated | Add tokens in Settings to see live data</p>
+          <p>✨ {PLATFORMS.length} platforms integrated | Add tokens in Settings to see live data</p>
         </div>
       </footer>
     </main>
