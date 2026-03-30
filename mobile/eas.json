@@ -1,0 +1,32 @@
+{
+  "cli": {
+    "version": ">= 5.0.0"
+  },
+  "build": {
+    "production": {
+      "node": "18.17.0",
+      "env": {
+        "EAS_BUILD_PROFILE": "production"
+      }
+    },
+    "preview": {
+      "node": "18.17.0",
+      "env": {
+        "EAS_BUILD_PROFILE": "preview"
+      }
+    },
+    "development": {
+      "developmentClient": true
+    }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "ascAppId": "1234567890"
+      },
+      "android": {
+        "googlePlayAccount": "service-account@unified-dashboard.iam.gserviceaccount.com"
+      }
+    }
+  }
+}
