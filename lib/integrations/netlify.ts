@@ -40,6 +40,7 @@ class NetlifyClient {
 
   async getUser(): Promise<NetlifyUser> {
     const res = await this.client.get('/user');
+    if (!res.data) throw new Error('Failed to fetch user');
     return {
       id: res.data.id,
       email: res.data.email,
@@ -51,6 +52,7 @@ class NetlifyClient {
     const res = await this.client.get('/sites', {
       params: { per_page: limit },
     });
+    if (!Array.isArray(res.data)) return [];
     return res.data.map((site: any) => ({
       id: site.id,
       name: site.name,
@@ -66,6 +68,7 @@ class NetlifyClient {
     const res = await this.client.get(`/sites/${siteId}/deploys`, {
       params: { per_page: limit },
     });
+    if (!Array.isArray(res.data)) return [];
     return res.data.map((deploy: any) => ({
       id: deploy.id,
       site_id: deploy.site_id,

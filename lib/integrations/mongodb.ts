@@ -34,6 +34,7 @@ class MongoDBClient {
 
   async getOrgs(): Promise<MongoDBOrg[]> {
     const res = await this.client.get('/orgs');
+    if (!res.data || !res.data.results) return [];
     return res.data.results.slice(0, 10).map((org: any) => ({
       id: org.id,
       name: org.name,
@@ -42,6 +43,7 @@ class MongoDBClient {
 
   async getProjects(orgId: string): Promise<MongoDBProject[]> {
     const res = await this.client.get(`/orgs/${orgId}/projects`);
+    if (!res.data || !res.data.results) return [];
     return res.data.results.slice(0, 10).map((project: any) => ({
       id: project.id,
       name: project.name,
@@ -51,6 +53,7 @@ class MongoDBClient {
 
   async getClusters(groupId: string): Promise<MongoDBCluster[]> {
     const res = await this.client.get(`/groups/${groupId}/clusters`);
+    if (!res.data || !res.data.results) return [];
     return res.data.results.slice(0, 10).map((cluster: any) => ({
       id: cluster.id,
       name: cluster.name,

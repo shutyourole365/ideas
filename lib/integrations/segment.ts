@@ -33,6 +33,7 @@ class SegmentClient {
 
   async getWorkspaces(): Promise<SegmentWorkspace[]> {
     const res = await this.client.get('/workspaces');
+    if (!res.data || !res.data.workspaces) return [];
     return res.data.workspaces.slice(0, 5).map((ws: any) => ({
       id: ws.id,
       name: ws.name,
@@ -42,6 +43,7 @@ class SegmentClient {
 
   async getSources(workspaceId: string): Promise<SegmentSource[]> {
     const res = await this.client.get(`/workspaces/${workspaceId}/sources`);
+    if (!res.data || !res.data.sources) return [];
     return res.data.sources.slice(0, 10).map((source: any) => ({
       id: source.id,
       name: source.name,
@@ -52,6 +54,7 @@ class SegmentClient {
 
   async getDestinations(workspaceId: string): Promise<SegmentDestination[]> {
     const res = await this.client.get(`/workspaces/${workspaceId}/destinations`);
+    if (!res.data || !res.data.destinations) return [];
     return res.data.destinations.slice(0, 10).map((dest: any) => ({
       id: dest.id,
       name: dest.name,

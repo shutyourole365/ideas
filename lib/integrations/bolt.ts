@@ -38,6 +38,7 @@ class BoltClient {
 
   async getUser(): Promise<BoltUser> {
     const res = await this.client.get('/user');
+    if (!res.data) throw new Error('Failed to fetch user');
     return {
       id: res.data.id,
       email: res.data.email,
@@ -49,6 +50,7 @@ class BoltClient {
     const res = await this.client.get('/apps', {
       params: { limit },
     });
+    if (!res.data || !res.data.apps) return [];
     return res.data.apps.map((app: any) => ({
       id: app.id,
       name: app.name,
@@ -63,6 +65,7 @@ class BoltClient {
     const res = await this.client.get(`/apps/${appId}/deployments`, {
       params: { limit },
     });
+    if (!res.data || !res.data.deployments) return [];
     return res.data.deployments.map((deploy: any) => ({
       id: deploy.id,
       app_id: deploy.app_id,

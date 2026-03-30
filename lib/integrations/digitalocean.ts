@@ -36,6 +36,7 @@ class DigitalOceanClient {
 
   async getDroplets(): Promise<DODroplet[]> {
     const res = await this.client.get('/droplets');
+    if (!res.data || !res.data.droplets) return [];
     return res.data.droplets.slice(0, 10).map((droplet: any) => ({
       id: droplet.id,
       name: droplet.name,
@@ -48,15 +49,17 @@ class DigitalOceanClient {
 
   async getApps(): Promise<DOApp[]> {
     const res = await this.client.get('/apps');
+    if (!res.data || !res.data.apps) return [];
     return res.data.apps.slice(0, 10).map((app: any) => ({
       id: app.id,
-      name: app.spec.name,
+      name: app.spec?.name || 'unknown',
       status: app.status || 'unknown',
     }));
   }
 
   async getDatabases(): Promise<DODatabase[]> {
     const res = await this.client.get('/databases');
+    if (!res.data || !res.data.databases) return [];
     return res.data.databases.slice(0, 10).map((db: any) => ({
       id: db.id,
       name: db.name,

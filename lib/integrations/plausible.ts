@@ -33,6 +33,7 @@ class PlausibleClient {
 
   async getSites(): Promise<PlausibleSite[]> {
     const res = await this.client.get('/sites');
+    if (!Array.isArray(res.data)) return [];
     return res.data.slice(0, 10).map((site: any) => ({
       domain: site.domain,
       createdAt: site.createdAt,

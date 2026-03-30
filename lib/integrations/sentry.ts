@@ -37,6 +37,9 @@ class SentryClient {
 
   async getOrg(): Promise<SentryOrg> {
     const res = await this.client.get('/organizations');
+    if (!res.data || res.data.length === 0) {
+      throw new Error('No organizations found');
+    }
     const org = res.data[0];
     return {
       id: org.id,

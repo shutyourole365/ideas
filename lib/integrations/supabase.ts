@@ -44,6 +44,7 @@ class SupabaseClient {
 
   async getOrganizations(): Promise<SupabaseOrganization[]> {
     const res = await this.client.get('/organizations');
+    if (!Array.isArray(res.data)) return [];
     return res.data.map((org: any) => ({
       id: org.id,
       name: org.name,
@@ -53,6 +54,7 @@ class SupabaseClient {
 
   async getProjects(orgId: string): Promise<SupabaseProject[]> {
     const res = await this.client.get(`/organizations/${orgId}/projects`);
+    if (!Array.isArray(res.data)) return [];
     return res.data.map((project: any) => ({
       id: project.id,
       name: project.name,
@@ -68,6 +70,7 @@ class SupabaseClient {
 
   async getDatabaseInfo(projectRef: string): Promise<SupabaseDatabase | null> {
     const res = await this.client.get(`/projects/${projectRef}/database`);
+    if (!res.data) return null;
     return {
       name: res.data.name,
       version: res.data.version,

@@ -40,6 +40,7 @@ class VercelClient {
 
   async getUser(): Promise<VercelUser> {
     const res = await this.client.get('/v2/user');
+    if (!res.data || !res.data.user) throw new Error('Failed to fetch user');
     return {
       uid: res.data.user.uid,
       username: res.data.user.username,
@@ -51,6 +52,7 @@ class VercelClient {
     const res = await this.client.get('/v9/projects', {
       params: { limit },
     });
+    if (!res.data || !res.data.projects) return [];
     return res.data.projects.map((project: any) => ({
       id: project.id,
       name: project.name,
@@ -66,6 +68,7 @@ class VercelClient {
     const res = await this.client.get('/v6/deployments', {
       params: { projectId, limit },
     });
+    if (!res.data || !res.data.deployments) return [];
     return res.data.deployments.map((dep: any) => ({
       uid: dep.uid,
       name: dep.name,

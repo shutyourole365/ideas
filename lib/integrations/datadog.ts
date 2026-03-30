@@ -35,6 +35,7 @@ class DatadogClient {
 
   async getUser(): Promise<DatadogUser> {
     const res = await this.client.get('/user');
+    if (!res.data || !res.data.user) throw new Error('Failed to fetch user');
     return {
       id: res.data.user.id,
       name: res.data.user.name,
@@ -46,6 +47,7 @@ class DatadogClient {
     const res = await this.client.get('/monitor', {
       params: { page_size: limit },
     });
+    if (!Array.isArray(res.data)) return [];
     return res.data.slice(0, limit).map((monitor: any) => ({
       id: monitor.id,
       name: monitor.name,

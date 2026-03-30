@@ -68,6 +68,7 @@ class StripeClient {
     const res = await this.client.get('/charges', {
       params: { limit },
     });
+    if (!res.data || !res.data.data) return [];
     return res.data.data.map((charge: any) => ({
       id: charge.id,
       amount: charge.amount,
@@ -83,6 +84,7 @@ class StripeClient {
     const res = await this.client.get('/customers', {
       params: { limit },
     });
+    if (!res.data || !res.data.data) return [];
     return res.data.data.map((customer: any) => ({
       id: customer.id,
       email: customer.email,
@@ -95,6 +97,7 @@ class StripeClient {
     const res = await this.client.get('/subscriptions', {
       params: { limit },
     });
+    if (!res.data || !res.data.data) return [];
     return res.data.data.map((sub: any) => ({
       id: sub.id,
       customer: sub.customer,
