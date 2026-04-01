@@ -113,7 +113,7 @@ export default function StripeDashboard() {
                   <div>
                     <p className="font-semibold text-gray-900">{sub.id}</p>
                     <p className="text-sm text-gray-600">
-                      {sub.items.data[0]?.price.amount ? `$${(sub.items.data[0].price.amount / 100).toFixed(2)}/${sub.currency}` : 'Custom pricing'}
+                      {sub.items.data[0]?.price.unit_amount ? `$${(sub.items.data[0].price.unit_amount / 100).toFixed(2)}/${sub.currency}` : 'Custom pricing'}
                     </p>
                   </div>
                   <span className={`px-2 py-1 text-xs font-semibold rounded ${
