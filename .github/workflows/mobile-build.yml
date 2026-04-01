@@ -33,6 +33,13 @@ jobs:
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
+      - name: Initialize EAS project
+        run: |
+          cd mobile
+          npx eas-cli init --id faf174c0-b47e-4560-928f-ff19ca82c4b4 --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
       - name: Build mobile app
         run: |
           cd mobile
