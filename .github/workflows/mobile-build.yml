@@ -1,0 +1,53 @@
+name: Mobile App Build & Submit
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: 'Platform to build'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - ios
+          - android
+          - all
+      submit:
+        description: 'Submit to stores after build?'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
+
+      - name: Build mobile app
+        run: |
+          cd mobile
+          npm install --legacy-peer-deps
+          eas build --platform ${{ github.event.inputs.platform }}
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Submit to stores (optional)
+        if: github.event.inputs.submit == 'true'
+        run: |
+          cd mobile
+          eas submit --platform ${{ github.event.inputs.platform }}
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Notify completion
+        run: echo "✅ Build complete for ${{ github.event.inputs.platform }}"
