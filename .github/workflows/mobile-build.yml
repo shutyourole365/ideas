@@ -33,13 +33,20 @@ jobs:
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
+      - name: Initialize EAS project
+        run: |
+          cd mobile
+          eas init --id faf174c0-b47e-4560-928f-ff19ca82c4b4 --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
       - name: Build mobile app
         run: |
           cd mobile
           rm -rf node_modules package-lock.json
           npm cache clean --force
           npm install --legacy-peer-deps
-          npx eas-cli build --platform ${{ github.event.inputs.platform }} --non-interactive
+          eas build --platform ${{ github.event.inputs.platform }} --non-interactive
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
@@ -47,7 +54,7 @@ jobs:
         if: github.event.inputs.submit == 'true'
         run: |
           cd mobile
-          npx eas-cli submit --platform ${{ github.event.inputs.platform }} --non-interactive
+          eas submit --platform ${{ github.event.inputs.platform }} --non-interactive
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
