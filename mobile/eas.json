@@ -19,14 +19,4 @@
       "developmentClient": true
     }
   },
-  "submit": {
-    "production": {
-      "ios": {
-        "ascAppId": "1234567890"
-      },
-      "android": {
-        "googlePlayAccount": "service-account@unified-dashboard.iam.gserviceaccount.com"
-      }
-    }
-  }
 }
