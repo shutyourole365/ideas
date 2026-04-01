@@ -39,8 +39,8 @@ jobs:
           rm -rf node_modules package-lock.json
           npm cache clean --force
           npm install --legacy-peer-deps
-          eas init --non-interactive
-          eas build --platform ${{ github.event.inputs.platform }}
+          npx eas-cli init --id faf174c0-b47e-4560-928f-ff19ca82c4b4
+          npx eas-cli build --platform ${{ github.event.inputs.platform }}
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
