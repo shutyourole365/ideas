@@ -40,21 +40,42 @@ jobs:
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Build mobile app
+      - name: Install dependencies
         run: |
           cd mobile
           rm -rf node_modules package-lock.json
           npm cache clean --force
           npm install --legacy-peer-deps
-          eas build --platform ${{ github.event.inputs.platform }} --non-interactive
+
+      - name: Build iOS
+        if: github.event.inputs.platform == 'ios' || github.event.inputs.platform == 'all'
+        run: |
+          cd mobile
+          eas build --platform ios --non-interactive
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Submit to stores (optional)
-        if: github.event.inputs.submit == 'true'
+      - name: Build Android
+        if: github.event.inputs.platform == 'android' || github.event.inputs.platform == 'all'
         run: |
           cd mobile
-          eas submit --platform ${{ github.event.inputs.platform }} --non-interactive
+          eas build --platform android --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Submit iOS to App Store (optional)
+        if: github.event.inputs.submit == 'true' && (github.event.inputs.platform == 'ios' || github.event.inputs.platform == 'all')
+        run: |
+          cd mobile
+          eas submit --platform ios --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Submit Android to Play Store (optional)
+        if: github.event.inputs.submit == 'true' && (github.event.inputs.platform == 'android' || github.event.inputs.platform == 'all')
+        run: |
+          cd mobile
+          eas submit --platform android --non-interactive
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
