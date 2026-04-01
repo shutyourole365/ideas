@@ -16,7 +16,7 @@
     "react": "^18.2.0",
     "react-native": "^0.84.1",
     "expo": "^55.0.9",
-    "expo-router": "^3.4.0",
+    "expo-router": "^55.0.8",
     "expo-secure-store": "^12.3.0",
     "axios": "^1.6.0",
     "@react-native-async-storage/async-storage": "^1.21.0"
